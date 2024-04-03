@@ -1,6 +1,7 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurant] = useState([]);
@@ -9,6 +10,8 @@ const Body = () => {
     // setlistOfRestaurants = arr[1];
 
     const [searchText, setSearchText] = useState("");
+
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
     useEffect(() => {
         fetchData();
@@ -22,25 +25,28 @@ const Body = () => {
         const json = await data.json();
         setListOfRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
+
+    const onlineStatus = useOnlineStatus();
+
+    if(onlineStatus === false) return <h1>Looks like you are offline</h1>
     
 return  listOfRestaurants.length === 0 ? (
      <Shimmer />
    ): (
         <div className="body">
             <div className="filter"> 
-                <button className="filter-btn" 
+                <button className="m-4 p-4 border border-solid bg-slate-300 rounded-md" 
                 onClick={() => {
                     const filteredList = listOfRestaurants.filter(
                         (res) => (res.avgRating > 4)
                     );
-                    console.log(testlist);
-                    setTestlist([1,2]);
                     setListOfRestaurant(filteredList);
                 }}> Top rated restaurants</button>
             </div>
-            <div className="res-container">
+            <div className="flex flex-wrap">
             {
-                listOfRestaurants.map((restaurant) => (<RestaurantCard key={restaurant.info.id} resData={restaurant} />))
+                listOfRestaurants.map((restaurant) => (
+                <RestaurantCardPromoted key={restaurant.info.id} resData={restaurant} />))
             }
             </div>
         </div>

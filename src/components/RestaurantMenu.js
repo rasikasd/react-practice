@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { CDN_URL } from "../utils/constants";
 
 const RestaurantMenu = () => {
 
@@ -13,22 +14,24 @@ const RestaurantMenu = () => {
     // empty array means it will be called only the first time component renders
 
     const fetchMenu = async() => {
-        const data = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=211120&catalog_qa=undefined&submitAction=ENTER");
+        const data = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=765152&catalog_qa=undefined&isMenuUx4=true&submitAction=ENTER");
         const json = await data.json();
         console.log(json);
-        setResInfo(json);
+        setResInfo(json.data.cards);
+        console.log(json.data.cards);
     };
 
     if(resInfo === null) return <Shimmer />;
 
     return (
-        <div className="menu">
-            <h1>Name of the Restaurant</h1>
+        <div className="border-lime-800">
+            <div className=" text-xl"> {resInfo[0].card.card.text} </div>
+            <img src= {CDN_URL+ resInfo[2].card.card.info.cloudinaryImageId} 
+            className="m-4 p-4 w-[150px]"></img>
             <h2>Menu</h2>
-            <ul>
-                <li>Burger</li>
-
-            </ul>
+            <div>
+                {resInfo[2].card.card.info.cuisines}
+            </div>
         </div>
     );
 };
