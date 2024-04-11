@@ -2,6 +2,8 @@ import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { LIST_API } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurant] = useState([]);
@@ -19,7 +21,7 @@ const Body = () => {
 
     const fetchData = async() => {
         const data = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.61610&lng=73.72860&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+            LIST_API
         );
 
         const json = await data.json();
@@ -46,7 +48,11 @@ return  listOfRestaurants.length === 0 ? (
             <div className="flex flex-wrap">
             {
                 listOfRestaurants.map((restaurant) => (
-                <RestaurantCardPromoted key={restaurant.info.id} resData={restaurant} />))
+                <Link 
+                    key={restaurant.info.id} 
+                    to={"/restaurant/" + restaurant.info.id} >
+                    <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+                </Link>))
             }
             </div>
         </div>

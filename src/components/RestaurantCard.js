@@ -6,14 +6,17 @@ const RestaurantCard = (props) => {
         <div className="m-4 p-4 w-[250px] bg-slate-200 rounded-lg">
             <img className="rounded-lg" 
             alt="res-logo" src={CDN_URL + resData.info.cloudinaryImageId}/>
-            <h3> {resData.info.name} </h3>
-            <h4> {resData.info.cuisines.join(", ")} </h4>
-            <h4> {resData.info.avgRating} stars </h4>
-            <h5> Delivery time {resData.info?.sla?.deliveryTime} mins </h5>
+            <h3>  {resData?.info?.name} </h3>
+            <h4> {resData?.info?.cuisines.join(", ")} </h4>
+            <h4> {resData?.info?.avgRating} stars </h4>
+            <h5> Delivery time {resData?.info?.sla?.deliveryTime} mins </h5>
         </div>
     )
 };
 
+//Higher order Component
+
+//Input -> RestaurantCard =>> RestaurantCardPromoted
 
 export const withPromotedLabel = (RestaurantCard) => {
     return (props) => {
