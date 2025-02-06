@@ -22,7 +22,7 @@ const Header = () => {
                     <li className="px-4"><Link to="/"> Home </Link></li>
                     <li className="px-4"><Link to="/about"> About us </Link> </li>
                     <li className="px-4"><Link to="/contact"> Contact us </Link></li>
-                    <l1 className="px-4"> <Link to="/grocery"> Grocery </Link> </l1>
+                    <li className="px-4"> <Link to="/grocery"> Grocery </Link> </li>
                     <li className="px-4">Cart</li>
                     <li><button className="border border-solid border-blue-500 px-3 bg-blue-400 rounded-lg"
                     onClick={() => {
