@@ -40,7 +40,7 @@ return  listOfRestaurants.length === 0 ? (
                 <button className="m-4 p-4 border border-solid bg-slate-300 rounded-md" 
                 onClick={() => {
                     const filteredList = listOfRestaurants.filter(
-                        (res) => (res.avgRating > 4)
+                        (res) => (res?.info.avgRating > 4.2)
                     );
                     setListOfRestaurant(filteredList);
                 }}> Top rated restaurants</button>
